@@ -1,26 +1,77 @@
 # ember-cli-remark
 
-foo `bar`.
+## Install
 
-``` javascript
-let foo = {};
-foo.name = 'hello';
+```
+$ ember install ember-cli-remark
 ```
 
-hey there **this** *em*
+## Configure name to path mappings
 
-> ok
+``` javascript
+// ember-cli-build.js
+let app = new EmberAddon(defaults, {
+  'ember-cli-remark': {
+    debug: true,
+    paths: {
+      'markdown': 'app/markdown'
+    }
+  }
+});
+```
 
-* foo
-* bar
+## Add `app/markdown/index.md`
 
-1. foo
-2. bar
+``` markdown
+# Hey there
+```
 
-http://www.google.com
+## Load `_index.json`
 
-![https://78.media.tumblr.com/d9cb26a82da1495b46bb3bcb26702b46/tumblr_p74um7h2st1qz5jeho1_1280.jpg]
+``` javascript
+fetch('/assets/ember-cli-remark/markdown/_index.json');
+```
 
-![](https://78.media.tumblr.com/d9cb26a82da1495b46bb3bcb26702b46/tumblr_p74um7h2st1qz5jeho1_1280.jpg)
+``` json
+[
+  {
+    "id": "index",
+    "headings": [
+      {
+        "depth": 1,
+        "value": "Hey there"
+      }
+    ]
+  }
+]
+```
 
----
+## Load parsed markdown
+
+``` javascript
+fetch('/assets/ember-cli-remark/markdown/index.json')
+```
+
+``` json
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "Hey there"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Render parsed markdown
+
+``` hbs
+{{ui-remark/render content}}
+```
