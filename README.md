@@ -1,20 +1,5 @@
 # ember-cli-remark
 
-```
-app
-  markdown
-    post-1
-      content.md
-      image.png
-```
+This addon let's you have one or more folders with markdown files which are transformed to abstact syntax tree by using remark and made available as a json files.
 
-```
-public
-  remark
-    index.json
-    markdown
-      index.json
-      post-1
-        content.md
-        image.png
-```
+[Demo and documentation is here](https://ember-cli-remark.firebaseapp.com/).
