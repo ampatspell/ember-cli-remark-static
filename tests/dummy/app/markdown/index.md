@@ -75,5 +75,3 @@ fetch('/assets/ember-cli-remark/markdown/index.json')
 ``` hbs
 {{ui-remark/render content}}
 ```
-
-![pic.jpg]
