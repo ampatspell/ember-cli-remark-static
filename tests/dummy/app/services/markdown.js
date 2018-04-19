@@ -1,12 +1,18 @@
 import Service from '@ember/service';
-import _ajax from 'ember-ajax';
+import ajax from 'ember-ajax';
 import { getOwner } from '@ember/application';
 
-const ajax = url => _ajax(`/assets/ember-cli-remark/markdown/${url}`);
+const url = '/assets/ember-cli-remark/markdown';
 
 export default Service.extend({
 
+  url,
   files: null,
+
+  _ajax(path) {
+    let url = this.get('url');
+    return ajax(`${url}/${path}`);
+  },
 
   _createFile(_index) {
     return getOwner(this).factoryFor('model:file').create({ _parent: this, _index });
@@ -24,7 +30,7 @@ export default Service.extend({
   loadIndex() {
     let promise = this._loadIndex;
     if(!promise) {
-      promise = ajax('_index.json').then(res => this._didLoadIndex(res));
+      promise = this._ajax('_index.json').then(res => this._didLoadIndex(res));
       this._loadIndex = promise;
     }
     return promise;
@@ -42,7 +48,7 @@ export default Service.extend({
 
   _loadFile(file) {
     let id = file.get('_index.id');
-    return ajax(`${id}.json`);
+    return this._ajax(`${id}.json`);
   }
 
 });

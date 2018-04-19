@@ -27,7 +27,8 @@ export default EmberObject.extend({
 
   urlForImageReference(node) {
     let identifier = node.identifier;
-    return `/assets/ember-cli-remark/markdown/${identifier}`;
+    let url = this.get('_parent.url');
+    return `${url}/${identifier}`;
   },
 
 });
