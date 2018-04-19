@@ -14,6 +14,12 @@ const addComponentName = child => {
   let type = dasherize(child.type);
   if(type === 'heading') {
     name = `heading-${child.depth}`;
+  } else if(type === 'list') {
+    if(child.ordered) {
+      name = 'list-ordered';
+    } else {
+      name = 'list-unordered';
+    }
   } else {
     name = child.type;
   }
