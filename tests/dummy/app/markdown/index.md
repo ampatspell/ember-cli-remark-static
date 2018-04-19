@@ -20,12 +20,6 @@ let app = new EmberAddon(defaults, {
 });
 ```
 
-## Add `app/markdown/index.md`
-
-``` markdown
-# Hey there
-```
-
 ## Load `_index.json`
 
 ``` javascript
@@ -39,10 +33,35 @@ fetch('/assets/ember-cli-remark/markdown/_index.json');
     "headings": [
       {
         "depth": 1,
-        "value": "Hey there"
+        "value": "ember-cli-remark"
+      },
+      {
+        "depth": 2,
+        "value": "Install"
+      },
+      {
+        "depth": 2,
+        "value": "Configure name to path mappings"
+      },
+      {
+        "depth": 2,
+        "value": "Add app/markdown/index.md"
+      },
+      {
+        "depth": 2,
+        "value": "Load _index.json"
+      },
+      {
+        "depth": 2,
+        "value": "Load parsed markdown"
+      },
+      {
+        "depth": 2,
+        "value": "Render parsed markdown"
       }
     ]
-  }
+  },
+  ...
 ]
 ```
 
@@ -62,10 +81,26 @@ fetch('/assets/ember-cli-remark/markdown/index.json')
       "children": [
         {
           "type": "text",
-          "value": "Hey there"
+          "value": "ember-cli-remark"
         }
       ]
-    }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Install"
+        }
+      ]
+    },
+    {
+      "type": "code",
+      "lang": null,
+      "value": "$ ember install ember-cli-remark"
+    },
+    ...
   ]
 }
 ```
