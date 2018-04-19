@@ -4,4 +4,6 @@ This addon let's you have one or more folders with markdown files which are tran
 
 Also it has component to render those json objects.
 
+![](screenshot.png)
+
 [Demo and documentation is here](https://ember-cli-remark.firebaseapp.com/).
