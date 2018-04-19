@@ -1,4 +1,4 @@
-import EmberObject from '@ember/object';
+import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed'
 
 export default EmberObject.extend({
@@ -23,6 +23,15 @@ export default EmberObject.extend({
       this._load = promise;
     }
     return promise;
-  }
+  },
+
+  settings: computed(function() {
+    return {
+      urlForImageReference(node) {
+        let identifier = node.identifier;
+        return `/assets/ember-cli-remark/markdown/${identifier}`;
+      }
+    }
+  }),
 
 });

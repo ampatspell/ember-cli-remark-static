@@ -1,11 +1,16 @@
 import Component from '@ember/component';
-import { readOnly } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { getSetting } from '../component';
 
 export default Component.extend({
   tagName: 'img',
 
   attributeBindings: [ 'src' ],
 
-  src: readOnly('node.identifier')
+  src: computed('node.identifier', function() {
+    let node = this.get('node');
+    let url = getSetting(this, 'urlForImageReference', node);
+    return url || url.get('identifier');
+  }).readOnly()
 
 });
