@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from './template';
+import { assert } from '@ember/debug';
 
 export const getRoot = component => {
   let parent = component;
@@ -20,9 +21,8 @@ export const getSettings = component => {
 export const getSetting = (component, key, node) => {
   let root = getRoot(component);
   let settings = root.get('settings');
-  if(!settings[key]) {
-    return;
-  }
+  assert(`settings is required`, !!settings);
+  assert(`settings.${key} must be function`, typeof settings[key] === 'function');
   return settings[key](node, root);
 };
 

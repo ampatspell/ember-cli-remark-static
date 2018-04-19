@@ -9,8 +9,7 @@ export default Component.extend({
 
   src: computed('node.identifier', function() {
     let node = this.get('node');
-    let url = getSetting(this, 'urlForImageReference', node);
-    return url || url.get('identifier');
+    return getSetting(this, 'urlForImageReference', node);
   }).readOnly()
 
 });
