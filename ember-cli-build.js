@@ -7,8 +7,7 @@ module.exports = function(defaults) {
     'ember-cli-remark': {
       debug: true,
       paths: {
-        'content': 'app/content',
-        'markdown': 'app/markdown'
+        'markdown': 'tests/dummy/app/markdown'
       }
     }
   });

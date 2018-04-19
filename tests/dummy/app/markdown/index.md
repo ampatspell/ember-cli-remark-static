@@ -1,7 +1,3 @@
-# Markdown index
+# ember-cli-remark
 
-## Hey there
-
-``` javascript
-this looks nice
-```
+hey there

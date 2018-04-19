@@ -11,11 +11,6 @@ module.exports = {
   },
   included(app) {
     this._super.included(...arguments);
-    if(app.project.pkg['ember-addon'] && !app.project.pkg['ember-addon'].paths) {
-      this.remarkRoot = path.resolve(app.project.root, path.join('tests', 'dummy'));
-    } else {
-      this.remarkRoot = app.project.root;
-    }
   },
   treeForPublic(tree) {
     let trees = [];
@@ -24,7 +19,7 @@ module.exports = {
     }
 
     let options = this.app.options['ember-cli-remark'];
-    let root = this.remarkRoot;
+    let root = this.app.project.root;
 
     trees.push(remarkTree(root, options));
 
