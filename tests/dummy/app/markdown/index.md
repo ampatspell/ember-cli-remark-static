@@ -1,4 +1,4 @@
-# ember-cli-remark
+# [ember-cli-remark](https://github.com/ampatspell/ember-cli-remark)
 
 ## Install
 
