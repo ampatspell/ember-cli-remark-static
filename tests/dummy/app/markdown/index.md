@@ -108,5 +108,5 @@ fetch('/assets/ember-cli-remark/markdown/index.json')
 ## Render parsed markdown
 
 ``` hbs
-{{ui-remark/render content}}
+{{ui-remark/render content=model.content settings=model.settings}}
 ```
