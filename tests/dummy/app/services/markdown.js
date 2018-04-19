@@ -11,7 +11,8 @@ export default Service.extend({
 
   _ajax(path) {
     let url = this.get('url');
-    return ajax(`${url}/${path}`);
+    let t = new Date().getTime();
+    return ajax(`${url}/${path}?t=${t}`);
   },
 
   _createFile(_index) {
