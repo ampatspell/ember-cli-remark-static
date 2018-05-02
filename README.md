@@ -7,3 +7,9 @@ Also it has component to render those json objects.
 [Demo and documentation is here](https://ember-cli-remark.firebaseapp.com/).
 
 ![](screenshot.png)
+
+
+## TODO
+
+* use `rehype`, `rehype-sanitize` for html
+* allow custom html tags which then will be rendered as components

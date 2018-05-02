@@ -1,0 +1,3 @@
+# Components
+
+foo <thing/> bar
