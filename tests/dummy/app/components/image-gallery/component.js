@@ -3,5 +3,12 @@ import layout from './template';
 
 export default Component.extend({
   classNameBindings: [ ':image-gallery' ],
-  layout
+  layout,
+
+  count: 0,
+
+  click() {
+    this.incrementProperty('count');
+  }
+  
 });

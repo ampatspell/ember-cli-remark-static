@@ -1,5 +1,7 @@
 # [ember-cli-remark-static](https://github.com/ampatspell/ember-cli-remark-static)
 
+This addon lets you to add one or more folders with markdown files which are parsed on build to json element tree and then can be rendered by using provided `ui-remark/render` component.
+
 ## Install
 
 ```

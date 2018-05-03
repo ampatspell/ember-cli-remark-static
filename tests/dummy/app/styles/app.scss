@@ -2,7 +2,7 @@
 @import "tomorrow";
 
 $font-family: 'Ubuntu Mono', monospace;
-$font-size: 13px;
+$font-size: 15px;
 
 body {
   cursor: default;
@@ -11,8 +11,13 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   font-family: $font-family;
   font-size: $font-size;
-  padding: 30px;
+  padding: 0;
   margin: 0;
+}
+
+.ui-application {
+  padding: 30px;
+  max-width: 600px;
 }
 
 code {
@@ -50,7 +55,7 @@ h3 {
 .hljs {
   padding: 0;
   font-family: $font-family;
-  font-size: $font-size;
+  font-size: 13px;
 }
 
 ul {
@@ -91,6 +96,7 @@ img {
   border: 1px solid #eee;
   padding: 5px 10px;
   border-radius: 3px;
+  user-select: none;
 }
 
 a.index {
