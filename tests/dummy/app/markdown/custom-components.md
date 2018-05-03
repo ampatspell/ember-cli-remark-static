@@ -38,6 +38,10 @@ export default Component.extend({
 
 And render:
 
-<image-gallery name="foo"></image-gallery>
+<image-gallery name="foo">
+
+![pic](/film-0353-004.jpg)
+
+</image-gallery>
 
 [&larr; back to index](/index)
