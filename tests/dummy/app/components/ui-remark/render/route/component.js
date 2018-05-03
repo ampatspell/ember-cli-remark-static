@@ -1,4 +1,4 @@
-import Component from 'ember-cli-remark/components/ui-remark/render/a/component';
+import Component from 'ember-cli-remark-static/components/ui-remark/render/a/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 

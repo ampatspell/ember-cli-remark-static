@@ -1,1 +1,1 @@
-export { default } from 'ember-cli-remark/components/ui-remark/render/ul/component';
+export { default } from 'ember-cli-remark-static/components/ui-remark/render/ul/component';

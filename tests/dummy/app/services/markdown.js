@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import ajax from 'ember-ajax';
 import { getOwner } from '@ember/application';
 
-const url = '/assets/ember-cli-remark/markdown';
+const url = '/assets/ember-cli-remark-static/markdown';
 
 export default Service.extend({
 

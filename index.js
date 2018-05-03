@@ -5,7 +5,7 @@ let remarkTree = require('./lib');
 let path = require('path');
 
 module.exports = {
-  name: 'ember-cli-remark',
+  name: 'ember-cli-remark-static',
   isDevelopingAddon() {
     return true;
   },
@@ -18,7 +18,7 @@ module.exports = {
       trees.push(tree);
     }
 
-    let options = this.app.options['ember-cli-remark'];
+    let options = this.app.options['ember-cli-remark-static'];
     let root = this.app.project.root;
 
     trees.push(remarkTree(root, options));

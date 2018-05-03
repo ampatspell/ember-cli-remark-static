@@ -1,9 +1,9 @@
-# [ember-cli-remark](https://github.com/ampatspell/ember-cli-remark)
+# [ember-cli-remark-static](https://github.com/ampatspell/ember-cli-remark-static)
 
 ## Install
 
 ```
-$ ember install ember-cli-remark
+$ ember install ember-cli-remark-static
 ```
 
 ## Configure name to path mappings
@@ -11,7 +11,7 @@ $ ember install ember-cli-remark
 ``` javascript
 // ember-cli-build.js
 let app = new EmberAddon(defaults, {
-  'ember-cli-remark': {
+  'ember-cli-remark-static': {
     debug: true,
     paths: {
       'markdown': 'app/markdown'
@@ -23,7 +23,7 @@ let app = new EmberAddon(defaults, {
 ## Load `_index.json`
 
 ``` javascript
-fetch('/assets/ember-cli-remark/markdown/_index.json');
+fetch('/assets/ember-cli-remark-static/markdown/_index.json');
 ```
 
 ``` json
@@ -33,7 +33,7 @@ fetch('/assets/ember-cli-remark/markdown/_index.json');
     "headings": [
       {
         "depth": 1,
-        "value": "ember-cli-remark"
+        "value": "ember-cli-remark-static"
       },
       {
         "depth": 2,
@@ -68,7 +68,7 @@ fetch('/assets/ember-cli-remark/markdown/_index.json');
 ## Load parsed markdown
 
 ``` javascript
-fetch('/assets/ember-cli-remark/markdown/index.json')
+fetch('/assets/ember-cli-remark-static/markdown/index.json')
 ```
 
 ``` json
@@ -84,12 +84,12 @@ fetch('/assets/ember-cli-remark/markdown/index.json')
           "type": "element",
           "tagName": "a",
           "properties": {
-            "href": "https://github.com/ampatspell/ember-cli-remark"
+            "href": "https://github.com/ampatspell/ember-cli-remark-static"
           },
           "children": [
             {
               "type": "text",
-              "value": "ember-cli-remark"
+              "value": "ember-cli-remark-static"
             }
           ]
         }

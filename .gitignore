@@ -22,5 +22,5 @@ testem.log
 bower.json.ember-try
 package.json.ember-try
 
-ember-cli-remark-debug
+ember-cli-remark-static-debug
 .DS_Store
