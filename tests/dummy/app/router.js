@@ -5,7 +5,7 @@ const Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL,
 
-  didTransition(transitions, ...args) {
+  didTransition() {
     window.scrollTo(0, 0);
     this._super(...arguments);
   }
