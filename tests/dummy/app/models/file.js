@@ -49,6 +49,8 @@ export default EmberObject.extend({
         node.properties.routeName = routeName;
         node.properties.id = id;
       }
+    } else if(node.tagName === 'custom') {
+      node.componentName = 'ui-remark/render/custom';
     }
   },
 

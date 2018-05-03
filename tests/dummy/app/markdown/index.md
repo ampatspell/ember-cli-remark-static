@@ -76,40 +76,41 @@ fetch('/assets/ember-cli-remark/markdown/index.json')
   "type": "root",
   "children": [
     {
-      "type": "heading",
-      "depth": 1,
+      "type": "element",
+      "tagName": "h1",
+      "properties": {},
       "children": [
         {
-          "type": "text",
-          "value": "ember-cli-remark"
+          "type": "element",
+          "tagName": "a",
+          "properties": {
+            "href": "https://github.com/ampatspell/ember-cli-remark"
+          },
+          "children": [
+            {
+              "type": "text",
+              "value": "ember-cli-remark"
+            }
+          ]
         }
       ]
     },
     {
-      "type": "heading",
-      "depth": 2,
-      "children": [
-        {
-          "type": "text",
-          "value": "Install"
-        }
-      ]
-    },
-    {
-      "type": "code",
-      "lang": null,
-      "value": "$ ember install ember-cli-remark"
-    },
-    ...
+      "type": "text",
+      "value": "\n"
+    }
   ]
+  ...
 }
 ```
 
 ## Render parsed markdown
 
 ``` hbs
-{{ui-remark/render content=model.content settings=model.settings}}
+{{ui-remark/render node=model.content settings=model.settings}}
 ```
+
+<custom name="foo"></custom>
 
 * [about](/pages/about)
 * [components](/pages/components)

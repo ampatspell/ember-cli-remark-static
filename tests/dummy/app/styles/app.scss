@@ -19,6 +19,10 @@ code {
   font-family: $font-family;
 }
 
+a {
+  color: #000;
+}
+
 h1 {
   font-size: 21px;
   font-weight: 400;
@@ -77,4 +81,10 @@ hr {
 
 img {
   max-width: 100%;
+}
+
+.custom-component {
+  border: 1px solid #eee;
+  padding: 5px 10px;
+  border-radius: 3px;
 }
