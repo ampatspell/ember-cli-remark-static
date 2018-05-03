@@ -110,3 +110,6 @@ fetch('/assets/ember-cli-remark/markdown/index.json')
 ``` hbs
 {{ui-remark/render content=model.content settings=model.settings}}
 ```
+
+* [about](/pages/about)
+* [components](/pages/components)

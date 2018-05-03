@@ -1,1 +1,1 @@
-{{ui-remark/render/children children=node.children parent=this}}
+{{#each augmentedChildren as |child|}}{{component child.componentName node=child parent=this root=root}}{{/each}}
