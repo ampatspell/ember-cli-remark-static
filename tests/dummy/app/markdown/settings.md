@@ -41,7 +41,3 @@ export default EmberObject.extend({
 ```
 
 [&larr; back to index](/index)
-
-**foo**
-__foo__
-*foo*
