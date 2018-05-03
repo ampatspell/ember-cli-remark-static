@@ -57,6 +57,10 @@ ul {
   padding: 0 0 0 15px;
 }
 
+li {
+  padding: 1px 0;
+}
+
 li p,
 blockquote p {
   margin: 0;
@@ -83,8 +87,12 @@ img {
   max-width: 100%;
 }
 
-.custom-component {
+.image-gallery {
   border: 1px solid #eee;
   padding: 5px 10px;
   border-radius: 3px;
+}
+
+a.index {
+  text-decoration: none;
 }

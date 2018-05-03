@@ -49,8 +49,9 @@ export default EmberObject.extend({
         node.properties.routeName = routeName;
         node.properties.id = id;
       }
-    } else if(node.tagName === 'custom') {
-      node.componentName = 'ui-remark/render/custom';
+    } else if(node.tagName === 'image-gallery') {
+      // choose a compoent name for <image-gallery></image-gallery> element
+      node.componentName = 'image-gallery';
     }
   },
 

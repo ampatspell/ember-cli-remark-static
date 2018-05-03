@@ -1,10 +1,14 @@
 import Component from 'ember-cli-remark-static/components/ui-remark/render/a/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { equal } from '@ember/object/computed';
 
 export default Component.extend({
+  classNameBindings: [ 'isIndex:index' ],
 
   router: service(),
+
+  isIndex: equal('node.properties.routeName', 'index'),
 
   href: computed('node.properties.routeName', function() {
     let router = this.get('router');

@@ -32,32 +32,32 @@ fetch('/assets/ember-cli-remark-static/markdown/_index.json');
     "id": "index",
     "headings": [
       {
-        "depth": 1,
+        "level": "1",
         "value": "ember-cli-remark-static"
       },
       {
-        "depth": 2,
+        "level": "2",
         "value": "Install"
       },
       {
-        "depth": 2,
+        "level": "2",
         "value": "Configure name to path mappings"
       },
       {
-        "depth": 2,
-        "value": "Add app/markdown/index.md"
-      },
-      {
-        "depth": 2,
+        "level": "2",
         "value": "Load _index.json"
       },
       {
-        "depth": 2,
+        "level": "2",
         "value": "Load parsed markdown"
       },
       {
-        "depth": 2,
+        "level": "2",
         "value": "Render parsed markdown"
+      },
+      {
+        "level": "2",
+        "value": "Examples"
       }
     ]
   },
@@ -98,19 +98,19 @@ fetch('/assets/ember-cli-remark-static/markdown/index.json')
     {
       "type": "text",
       "value": "\n"
-    }
+    },
+    ...
   ]
-  ...
 }
 ```
 
 ## Render parsed markdown
 
 ``` hbs
-{{ui-remark/render node=model.content settings=model.settings}}
+{{ui-remark/render node=root settings=settings}}
 ```
 
-<custom name="foo"></custom>
+## Examples
 
-* [about](/pages/about)
-* [components](/pages/components)
+* [Settings](/pages/settings)
+* [Custom components](/pages/custom-components)
