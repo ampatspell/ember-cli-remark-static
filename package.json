@@ -28,17 +28,18 @@
     "deploy": "ember build -prod && firebase deploy"
   },
   "dependencies": {
+    "broccoli-file-creator": "^2.1.1",
+    "broccoli-funnel": "^2.0.1",
+    "broccoli-merge-trees": "^3.0.0",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
+    "gray-matter": "^4.0.1",
     "hast-util-to-string": "^1.0.1",
     "rehype-raw": "^2.0.0",
     "remark-highlight.js": "^5.0.0",
     "remark-parse": "^5.0.0",
     "remark-rehype": "^3.0.0",
-    "unified": "^6.1.6",
-    "broccoli-file-creator": "^2.1.1",
-    "broccoli-funnel": "^2.0.1",
-    "broccoli-merge-trees": "^3.0.0"
+    "unified": "^6.1.6"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
