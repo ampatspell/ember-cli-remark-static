@@ -3,15 +3,22 @@
   "version": "0.0.0",
   "description": "Ember.js addon for rendering static markdown by using components.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "remark",
+    "markdown",
+    "ast",
+    "static"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Arnis Vuskans <ampatspell@gmail.com> (http://www.amateurinmotion.com/)",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ampatspell/ember-cli-remark-static.git"
+  },
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint ./*.js addon addon-test-support app config lib server test-support tests",
