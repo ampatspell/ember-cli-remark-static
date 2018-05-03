@@ -6,11 +6,23 @@ let path = require('path');
 
 module.exports = {
   name: 'ember-cli-remark-static',
-  isDevelopingAddon() {
-    return true;
-  },
+  // isDevelopingAddon() {
+  //   return true;
+  // },
   included(app) {
     this._super.included(...arguments);
+
+    let options = this.app.options;
+    options.fingerprint = options.fingerprint || {};
+    let fingerprint = options.fingerprint;
+    fingerprint.exclude = fingerprint.exclude || [];
+    let exclude = fingerprint.exclude;
+
+    let remark = this.app.options['ember-cli-remark-static'] || {};
+    let paths = remark.paths || {};
+    for(let key in paths) {
+      exclude.push(`assets/ember-cli-remark-static/${key}`);
+    }
   },
   treeForPublic(tree) {
     let trees = [];

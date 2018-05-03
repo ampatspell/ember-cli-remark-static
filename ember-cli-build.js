@@ -9,9 +9,6 @@ module.exports = function(defaults) {
       paths: {
         'markdown': 'tests/dummy/app/markdown'
       }
-    },
-    fingerprint: {
-      exclude: [ 'assets/ember-cli-remark-static' ]
     }
   });
 
