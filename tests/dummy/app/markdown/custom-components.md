@@ -5,7 +5,11 @@ Let's say you want to render a `image-gallery` component somewhere inside your m
 ``` markdown
 # Images
 
-<image-gallery name="foo"></image-gallery>
+<image-gallery name="foo">
+
+  ![pic](/film-0353-004.jpg)
+
+</image-gallery>
 
 Ok, moving on...
 ```
@@ -36,11 +40,21 @@ export default Component.extend({
 });
 ```
 
+``` hbs
+<div>this: {{this}}</div>
+<div>root: {{root}}</div>
+<div>root.settings {{root.settings}}</div>
+<div>node.properties.name: {{node.properties.name}}</div>
+<div>clicks: {{count}}</div>
+
+{{ui-remark/render/content node=node parent=this}}
+```
+
 And render:
 
 <image-gallery name="foo">
 
-![pic](/film-0353-004.jpg)
+  ![pic](/film-0353-004.jpg)
 
 </image-gallery>
 
