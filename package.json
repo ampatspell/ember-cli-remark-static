@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-remark-static",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Ember.js addon for rendering static markdown by using components.",
   "keywords": [
     "ember-addon"
   ],

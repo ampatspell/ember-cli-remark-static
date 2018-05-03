@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "ember-cli-remark"
+    "default": "ember-cli-remark-static"
   }
 }
