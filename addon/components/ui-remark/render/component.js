@@ -1,11 +1,10 @@
 import Component from './-block/component';
-import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
-import { dasherize } from '@ember/string';
 
 const componentName = child => {
   let type = child.type;
+  let name;
   if(type === 'element') {
     name = child.tagName;
   } else {
