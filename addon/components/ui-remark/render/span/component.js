@@ -1,5 +1,5 @@
 import Component from '../-block/component';
 
 export default Component.extend({
-  tagName: 'code'
+  tagName: 'span'
 });

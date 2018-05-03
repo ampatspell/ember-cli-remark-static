@@ -11,17 +11,11 @@ const addComponentName = child => {
   if(name) {
     return;
   }
-  let type = dasherize(child.type);
-  if(type === 'heading') {
-    name = `heading-${child.depth}`;
-  } else if(type === 'list') {
-    if(child.ordered) {
-      name = 'list-ordered';
-    } else {
-      name = 'list-unordered';
-    }
+  let type = child.type;
+  if(type === 'element') {
+    name = child.tagName;
   } else {
-    name = child.type;
+    name = type;
   }
   child._uiRemarkComponentName = `${componentRoot}/${name}`;
 };
@@ -32,9 +26,7 @@ export default Component.extend({
 
   augmentedChildren: computed('children', function() {
     let children = A(this.get('children'));
-    children.forEach(child => {
-      addComponentName(child);
-    });
+    children.forEach(child => addComponentName(child));
     return children;
   }).readOnly()
 

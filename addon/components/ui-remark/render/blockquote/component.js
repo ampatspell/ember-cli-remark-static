@@ -1,7 +1,5 @@
-import Component from '@ember/component';
-import layout from './template';
+import Component from '../-block/component';
 
 export default Component.extend({
-  tagName: 'blockquote',
-  layout
+  tagName: 'blockquote'
 });
