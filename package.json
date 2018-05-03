@@ -57,13 +57,13 @@
     "ember-try": "^0.2.23",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^5.2.1",
+    "hast-util-to-string": "^1.0.1",
     "loader.js": "^4.2.3",
+    "rehype-raw": "^2.0.0",
     "remark-highlight.js": "^5.0.0",
     "remark-parse": "^5.0.0",
-    "unified": "^6.1.6",
-    "hast-util-to-string": "^1.0.1",
-    "rehype-raw": "^2.0.0",
-    "remark-rehype": "^3.0.0"
+    "remark-rehype": "^3.0.0",
+    "unified": "^6.1.6"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
