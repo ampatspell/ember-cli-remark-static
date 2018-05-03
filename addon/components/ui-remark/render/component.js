@@ -1,38 +1,46 @@
-import Component from '@ember/component';
-import layout from './template';
+import Component from './-block/component';
 import { assert } from '@ember/debug';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { dasherize } from '@ember/string';
 
-export const getRoot = component => {
-  let parent = component;
-  while(parent) {
-    let next = parent.get('parent');
-    if(!next) {
-      return parent;
-    }
-    parent = next;
+const componentName = child => {
+  let type = child.type;
+  if(type === 'element') {
+    name = child.tagName;
+  } else {
+    name = type;
   }
-};
-
-export const getSettings = component => {
-  let root = getRoot(component);
-  return root.get('settings');
-};
-
-export const getSetting = (component, key, node) => {
-  let root = getRoot(component);
-  let settings = root.get('settings');
-  assert(`settings is required`, !!settings);
-  assert(`settings.${key} must be function`, typeof settings[key] === 'function');
-  return settings[key](node, root);
+  return `ui-remark/render/${name}`;
 };
 
 export default Component.extend({
   classNameBindings: [ ':ui-remark-render' ],
-  layout,
 
-  content: null,
+  root: computed(function() {
+    return this;
+  }).readOnly(),
+
+  node: null,
   settings: null,
 
+  preprocessChild(node, child, settings) {
+    if(child.__preprocessed) {
+      return;
+    }
+    child.componentName = componentName(child);
+    if(settings) {
+      settings.preprocessNode(node, child);
+    }
+    child.__preprocessed = true;
+  },
+
+  preprocessChildren(node) {
+    let children = A(node.children);
+    let settings = this.get('settings');
+    children.forEach(child => this.preprocessChild(node, child, settings));
+  }
+
 }).reopenClass({
-  positionalParams: [ 'content' ]
+  positionalParams: [ 'node' ]
 });
