@@ -7,3 +7,5 @@ Also it has component to render those json objects.
 [Demo and documentation is here](https://ember-cli-remark-static.firebaseapp.com/).
 
 ![](screenshot.png)
+
+Also it's used by [ember-cli-zuglet](https://ember-cli-zuglet.firebaseapp.com/), [GitHub](https://github.com/ampatspell/ember-cli-zuglet)
