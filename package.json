@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-remark-static",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Ember.js addon for rendering static markdown by using components.",
   "keywords": [
     "ember-addon",
