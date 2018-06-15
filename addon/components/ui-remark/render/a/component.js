@@ -3,8 +3,9 @@ import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
   tagName: 'a',
-  attributeBindings: [ 'href' ],
+  attributeBindings: [ 'href', 'target' ],
 
-  href: readOnly('node.properties.href')
+  href: readOnly('node.properties.href'),
+  target: readOnly('node.properties.target')
 
 });
