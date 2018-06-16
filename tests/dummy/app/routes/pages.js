@@ -3,10 +3,10 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
 
-  // markdown: service(),
+  markdown: service(),
 
   model(params) {
-    // return this.get('markdown').load(params.page_id);
+    return this.get('markdown.pages').load(params.page_id);
   }
 
 });

@@ -13,7 +13,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
-  this.route('pages', { path: '/pages/:page_id' });
+  this.route('pages', { path: '/pages/*page_id' });
 });
 
 export default Router;
