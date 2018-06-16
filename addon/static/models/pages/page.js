@@ -1,7 +1,4 @@
 import EmberObject, { computed } from '@ember/object';
-import { getOwner } from '@ember/application';
-import { A } from '@ember/array';
-import { assign } from '@ember/polyfills';
 
 export default EmberObject.extend({
 
@@ -11,6 +8,14 @@ export default EmberObject.extend({
   isLoaded: false,
 
   content: null,
+
+  index: computed('id', function() {
+    let id = this.get('id');
+    if(!id) {
+      return;
+    }
+    return this.get('pages.service.index.files').findBy('id', id);
+  }).readOnly(),
 
   _deserialize(json) {
     let preprocessed = this.get('pages').preprocessPage(this, json) || json;

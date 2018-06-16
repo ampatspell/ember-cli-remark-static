@@ -2,14 +2,13 @@
 
 let merge = require('broccoli-merge-trees');
 let remarkTree = require('./lib');
-let path = require('path');
 
 module.exports = {
   name: 'ember-cli-remark-static',
   // isDevelopingAddon() {
   //   return true;
   // },
-  included(app) {
+  included() {
     this._super.included(...arguments);
 
     let options = this.app.options;
