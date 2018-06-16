@@ -70,6 +70,7 @@ export default EmberObject.extend({
   },
 
   _deserialize(json) {
+    json = this.get('service').preprocessIndex(json) || json;
     let files = this._deserializeFiles(json);
     let content = this._deserializeContent(files);
     this.setProperties({

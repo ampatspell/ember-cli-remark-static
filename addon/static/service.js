@@ -21,9 +21,14 @@ export default Service.extend({
     return getOwner(this).factoryFor('remark-static:static/index').create({ service: this });
   }).readOnly(),
 
+  pages: computed(function() {
+    return getOwner(this).factoryFor('remark-static:static/pages').create({ service: this });
+  }).readOnly(),
+
   resolveURL(path, ext) {
     let base = this.get('baseURL');
-    return `${base}/${path}.${ext}`;
+    let filename = ext ? `${path}.${ext}` : path;
+    return `${base}/${filename}`;
   },
 
   loadJSON(path) {
@@ -31,7 +36,16 @@ export default Service.extend({
     return fetch(url).then(res => res.json());
   },
 
-  preprocessIndexItem() {
+  preprocessIndex(/* json */) {
   },
+
+  preprocessIndexItem(/* json */) {
+  },
+
+  preprocessPage(/* page, json */) {
+  },
+
+  preprocessNode(/* page, parent, node */) {
+  }
 
 });
