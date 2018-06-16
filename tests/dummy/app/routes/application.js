@@ -6,7 +6,7 @@ export default Route.extend({
   markdown: service(),
 
   model() {
-    return this.get('markdown').loadIndex();
+    return this.get('markdown.index').load();
   }
 
 });
