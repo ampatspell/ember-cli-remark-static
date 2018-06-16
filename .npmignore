@@ -17,7 +17,7 @@ testem.js
 
 /ember-cli-remark-static-debug
 /.firebaserc
-/.firebase.json
+/firebase.json
 /screenshot.png
 
 # ember-try
