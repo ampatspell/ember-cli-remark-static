@@ -13,6 +13,9 @@ export default Component.extend({
 
   augmentedChildren: computed('root', 'node', function() {
     let { root, node } = this.getProperties('root', 'node');
+    if(!node) {
+      return;
+    }
     root.preprocessChildren(node);
     return node.children;
   }).readOnly()

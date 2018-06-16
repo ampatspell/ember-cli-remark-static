@@ -1,6 +1,7 @@
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const crawl = require('prember-crawler');
 
 module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
@@ -9,6 +10,9 @@ module.exports = function(defaults) {
       paths: {
         'markdown': 'tests/dummy/app/markdown'
       }
+    },
+    prember: {
+      urls: crawl
     }
   });
 
