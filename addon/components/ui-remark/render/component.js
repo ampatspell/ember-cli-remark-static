@@ -35,6 +35,9 @@ export default Component.extend({
   },
 
   preprocessChildren(node) {
+    if(!node) {
+      return;
+    }
     let children = A(node.children);
     let settings = this.get('settings');
     children.forEach(child => this.preprocessChild(node, child, settings));
