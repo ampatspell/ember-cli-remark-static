@@ -2,6 +2,8 @@
 
 This addon lets you to add one or more folders with markdown files which are parsed on build to json element tree and then can be rendered by using provided `ui-remark/render` component.
 
+Works with `ember-cli-fastboot` and `prember`.
+
 ## Install
 
 ```
@@ -110,6 +112,67 @@ fetch('/assets/ember-cli-remark-static/markdown/index.json')
 
 ``` hbs
 {{ui-remark/render node=root settings=settings}}
+```
+
+## Using loader service
+
+``` javascript
+// services/markdown.js
+import Service from 'ember-cli-remark-static/static/service';
+
+export default Service.extend({
+
+  identifier: 'markdown',
+
+  preprocessIndex(/* json */) {
+  },
+
+  preprocessIndexItem(/* json */) {
+  },
+
+  preprocessPage(/* page, json */) {
+  },
+
+  preprocessNode(/* page, parent, node */) {
+  }
+
+});
+```
+
+``` javascript
+// routes/application.js
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+
+export default Route.extend({
+
+  markdown: service(),
+
+  model() {
+    return this.get('markdown.index').load();
+  }
+
+});
+```
+
+``` javascript
+// routes/pages/page.js
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+
+export default Route.extend({
+
+  markdown: service(),
+
+  model(params) {
+    return this.get('markdown.pages').load(params.page_id);
+  }
+
+});
+```
+
+``` hbs
+{{ui-remark/render page=model}}
 ```
 
 ## Examples
