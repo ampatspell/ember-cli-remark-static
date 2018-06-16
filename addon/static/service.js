@@ -25,11 +25,7 @@ export default Service.extend({
     if(fastboot && fastboot.get('isFastBoot')) {
       let { protocol, host } = fastboot.get('request').getProperties('protocol', 'host');
       protocol = _protocol(protocol);
-      let components = [ basePath ];
-      components.unshift(`${protocol}//${host}`);
-      let url = components.join('');
-      console.log(url);
-      return url;
+      return `${protocol}//${host}${basePath}`;
     }
     return basePath;
   }).readOnly(),
