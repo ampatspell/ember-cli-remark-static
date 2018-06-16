@@ -36,6 +36,7 @@
     "ember-cli-htmlbars": "^2.0.1",
     "gray-matter": "^4.0.1",
     "hast-util-to-string": "^1.0.1",
+    "prember-crawler": "^0.1.0",
     "rehype-raw": "^2.0.0",
     "remark-highlight.js": "^5.0.0",
     "remark-parse": "^5.0.0",
@@ -48,6 +49,7 @@
     "ember-cli": "~3.0.0",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-eslint": "^4.2.1",
+    "ember-cli-fastboot": "^1.1.4-beta.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-qunit": "^4.1.1",
@@ -66,7 +68,9 @@
     "ember-try": "^0.2.23",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^5.2.1",
-    "loader.js": "^4.2.3"
+    "loader.js": "^4.2.3",
+    "prember": "^0.4.0",
+    "prember-middleware": "^0.1.0"
   },
   "engines": {
     "node": "6.* || >= 7.*"
