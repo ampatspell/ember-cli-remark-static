@@ -1,6 +1,6 @@
 import Component from './-block/component';
 import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { A } from '@ember/array';
 
 const componentName = child => {
@@ -21,8 +21,8 @@ export default Component.extend({
     return this;
   }).readOnly(),
 
-  node: readOnly('page.content'),
-  settings: readOnly('page'),
+  node: reads('page.content'),
+  settings: reads('page'),
   page: null,
 
   preprocessChild(node, child, settings) {
