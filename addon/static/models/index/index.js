@@ -44,7 +44,7 @@ export default EmberObject.extend({
   _deserializeContent(models) {
     let root = this._createItem({ type: 'directory' });
 
-    models = A(models.slice());
+    models = A([ ...models ]);
     models.pushObject(root);
 
     const bind = (model) => {
