@@ -1,6 +1,7 @@
 # Models
 
 * add `ember-fetch` in deps
+* always load index prior resolving page load
 
 ``` javascript
 export default RemarkService.extend({
