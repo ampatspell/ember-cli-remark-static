@@ -75,7 +75,12 @@ export default Service.extend({
     });
   },
 
-  load(opts={}) {
+  load(opts) {
+    if(typeof opts === 'string') {
+      opts = { page: opts };
+    } else if(!opts) {
+      opts = { index: true };
+    }
     let { index, page } = opts;
     assert(`'{ index: true }' and/or '{ page: id }' is required`, index || page);
     if(page) {
@@ -109,17 +114,5 @@ export default Service.extend({
     assert(`factory '${name} is not registered`, !!factory);
     return factory;
   }
-
-  // preprocessIndex(/* json */) {
-  // },
-
-  // preprocessIndexItem(/* json */) {
-  // },
-
-  // preprocessPage(/* page, json */) {
-  // },
-
-  // preprocessNode(/* page, parent, node */) {
-  // }
 
 });

@@ -15,7 +15,6 @@ export default EmberObject.extend({
     return A();
   }).readOnly(),
 
-
   _addPage(page) {
     page.set('parent', this);
     this.get('pages').addObject(page);
@@ -60,6 +59,9 @@ export default EmberObject.extend({
       this._promise = promise;
     }
     return promise;
+  },
+
+  preprocessNode() {
   },
 
   toStringExtension() {
