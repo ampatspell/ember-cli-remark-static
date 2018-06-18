@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
 import { assert } from '@ember/debug';
-import { reject } from 'rsvp';
+import { resolve, reject } from 'rsvp';
 import fetch from 'fetch';
 import Index from './internal/index';
 
@@ -56,23 +56,25 @@ export default Service.extend({
 
   loadJSON(path) {
     let url = this.resolveURL(path, 'json');
-    return fetch(url).then(res => res.json());
+    return resolve(fetch(url)).then(res => res.json());
   },
 
   loadIndex() {
     return this._internal.index.load().then(() => this);
   },
 
+  _loadPage(id) {
+    let page = this.page(id);
+    if(!page) {
+      let err = new Error(`Page ${id} was not found`);
+      err.code = 'not-found';
+      return reject(err);
+    }
+    return page.load();
+  },
+
   loadPage(id) {
-    return this.loadIndex().then(() => {
-      let page = this.page(id);
-      if(!page) {
-        let err = new Error(`Page ${id} was not found`);
-        err.code = 'not-found';
-        return reject(err);
-      }
-      return page.load();
-    });
+    return this.loadIndex().then(() => this._loadPage(id));
   },
 
   load(opts) {
