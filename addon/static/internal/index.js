@@ -17,7 +17,7 @@ export default class Index {
   }
 
   deserializePages(json) {
-    json = A(json);
+    json = A([ ...json ]);
 
     let root = this.createPageForId(null, { id: null, name: null });
     let pages = A();
