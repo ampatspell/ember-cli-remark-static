@@ -124,16 +124,26 @@ export default Service.extend({
 
   identifier: 'markdown',
 
-  preprocessIndex(/* json */) {
+  pageFactoryName(id) {
+    return 'model:page';
+  }
+
+});
+```
+
+``` javascript
+// models/page.js
+import Page from 'ember-cli-remark-static/static/page';
+
+export default Page.extend({
+
+  didLoadIndex() {
   },
 
-  preprocessIndexItem(/* json */) {
+  didLoadContent() {
   },
 
-  preprocessPage(/* page, json */) {
-  },
-
-  preprocessNode(/* page, parent, node */) {
+  preprocessNode(parent, node) {
   }
 
 });
@@ -149,7 +159,8 @@ export default Route.extend({
   markdown: service(),
 
   model() {
-    return this.get('markdown.index').load();
+    // loads index
+    return this.get('markdown').load();
   }
 
 });
@@ -165,6 +176,7 @@ export default Route.extend({
   markdown: service(),
 
   model(params) {
+    // load page by id (loads index if not yet loaded)
     return this.get('markdown.pages').load(params.page_id);
   }
 
