@@ -12,7 +12,8 @@ export default class Index {
   }
 
   createPageForId(id, props) {
-    return this.service._pageFactoryForId(id).create(props);
+    let service = this.service;
+    return service._pageFactoryForId(id).create(assign({ service }, props));
   }
 
   deserializePages(json) {

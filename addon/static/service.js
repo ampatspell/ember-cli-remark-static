@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
 import { assert } from '@ember/debug';
-import { all } from 'rsvp';
+import { reject } from 'rsvp';
 import fetch from 'fetch';
 import Index from './internal/index';
 
@@ -42,14 +42,6 @@ export default Service.extend({
     return basePath;
   }).readOnly(),
 
-  // index: computed(function() {
-  //   return getOwner(this).factoryFor('remark-static:static/index').create({ service: this });
-  // }).readOnly(),
-
-  // pages: computed(function() {
-  //   return getOwner(this).factoryFor('remark-static:static/pages').create({ service: this });
-  // }).readOnly(),
-
   resolveURL(path, ext) {
     let base = this.get('baseURL');
     if(path.startsWith('/')) {
@@ -73,14 +65,14 @@ export default Service.extend({
 
   loadPage(id) {
     return this.loadIndex().then(() => {
-
+      let page = this.page(id);
+      if(!page) {
+        let err = new Error(`Page ${id} was not found`);
+        err.code = 'not-found';
+        return reject(err);
+      }
+      return page.load();
     });
-    // return all([
-    //   this.loadIndex(),
-    //   this.loadJSON(page)
-    // ]).then(([ _, json ]) => {
-    //   console.log(json);
-    // });
   },
 
   load(opts={}) {
@@ -91,6 +83,14 @@ export default Service.extend({
     } else {
       return this.loadIndex();
     }
+  },
+
+  page(id) {
+    let content = this.get('content');
+    if(!content) {
+      return;
+    }
+    return content.page(id);
   },
 
   _pageFactoryNameForId(id) {

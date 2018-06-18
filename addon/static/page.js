@@ -3,6 +3,8 @@ import { A } from '@ember/array';
 
 export default EmberObject.extend({
 
+  service: null,
+
   // index
   id: null,
   headings: null,
@@ -36,6 +38,28 @@ export default EmberObject.extend({
   page(id) {
     let components = id.split('/');
     return this._page(components);
+  },
+
+  _deserialize(json) {
+    delete json.data;
+    delete json.frontmatter;
+    this.set('content', json);
+  },
+
+  _createLoadPromise() {
+    let { id, service } = this.getProperties('id', 'service');
+    return service.loadJSON(id)
+      .then(json => this._deserialize(json))
+      .then(() => this);
+  },
+
+  load() {
+    let promise = this._promise;
+    if(!promise) {
+      promise = this._createLoadPromise();
+      this._promise = promise;
+    }
+    return promise;
   },
 
   toStringExtension() {

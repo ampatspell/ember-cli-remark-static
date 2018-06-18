@@ -54,4 +54,20 @@ module('service', function(hooks) {
     });
   });
 
+  test('load page content', async function(assert) {
+    let page = await this.service.load({ page: 'tests/index' });
+    assert.deepEqual(page.getProperties('id', 'name'), {
+      id: 'tests/index',
+      name: 'index'
+    });
+  });
+
+  test('load missing page', async function(assert) {
+    try {
+      await this.service.load({ page: 'tests/foobar' });
+    } catch(err) {
+      assert.equal(err.code, 'not-found');
+    }
+  });
+
 });
