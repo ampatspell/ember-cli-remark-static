@@ -125,6 +125,12 @@ export default Service.extend({
   identifier: 'markdown',
 
   pageFactoryName(id) {
+    if(id) {
+      let [ folder, ...rest ] = id.split('/');
+      if(folder === 'articles') {
+        return 'model:article';
+      }
+    }
     return 'model:page';
   }
 
@@ -150,7 +156,7 @@ export default Page.extend({
 ```
 
 ``` javascript
-// routes/application.js
+// routes/pages/toc.js
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
@@ -159,7 +165,7 @@ export default Route.extend({
   markdown: service(),
 
   model() {
-    // loads index
+    // loads only index
     return this.get('markdown').load();
   }
 
