@@ -4,8 +4,6 @@ import { getOwner } from '@ember/application';
 import { assert } from '@ember/debug';
 import fetch from 'fetch';
 
-const _protocol = value => value === 'undefined:' ? 'http:' : value;
-
 export default Service.extend({
 
   identifier: null,
@@ -24,22 +22,30 @@ export default Service.extend({
     let fastboot = getOwner(this).lookup('service:fastboot');
     if(fastboot && fastboot.get('isFastBoot')) {
       let { protocol, host } = fastboot.get('request').getProperties('protocol', 'host');
-      protocol = _protocol(protocol);
+      if(protocol === 'undefined') {
+        protocol = 'http:';
+      }
       return `${protocol}//${host}${basePath}`;
     }
     return basePath;
   }).readOnly(),
 
-  index: computed(function() {
-    return getOwner(this).factoryFor('remark-static:static/index').create({ service: this });
-  }).readOnly(),
+  // index: computed(function() {
+  //   return getOwner(this).factoryFor('remark-static:static/index').create({ service: this });
+  // }).readOnly(),
 
-  pages: computed(function() {
-    return getOwner(this).factoryFor('remark-static:static/pages').create({ service: this });
-  }).readOnly(),
+  // pages: computed(function() {
+  //   return getOwner(this).factoryFor('remark-static:static/pages').create({ service: this });
+  // }).readOnly(),
 
   resolveURL(path, ext) {
     let base = this.get('baseURL');
+    if(path.startsWith('/')) {
+      path = path.slice(1);
+    }
+    if(path.endsWith('/')) {
+      path = path.slice(0, -1);
+    }
     let filename = ext ? `${path}.${ext}` : path;
     return `${base}/${filename}`;
   },
@@ -49,16 +55,16 @@ export default Service.extend({
     return fetch(url).then(res => res.json());
   },
 
-  preprocessIndex(/* json */) {
-  },
+  // preprocessIndex(/* json */) {
+  // },
 
-  preprocessIndexItem(/* json */) {
-  },
+  // preprocessIndexItem(/* json */) {
+  // },
 
-  preprocessPage(/* page, json */) {
-  },
+  // preprocessPage(/* page, json */) {
+  // },
 
-  preprocessNode(/* page, parent, node */) {
-  }
+  // preprocessNode(/* page, parent, node */) {
+  // }
 
 });
