@@ -34,7 +34,7 @@ export default Service.extend({
     let fastboot = getOwner(this).lookup('service:fastboot');
     if(fastboot && fastboot.get('isFastBoot')) {
       let { protocol, host } = fastboot.get('request').getProperties('protocol', 'host');
-      if(protocol === 'undefined') {
+      if(protocol === 'undefined:') {
         protocol = 'http:';
       }
       return `${protocol}//${host}${basePath}`;
