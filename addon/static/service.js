@@ -2,11 +2,23 @@ import Service from '@ember/service';
 import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
 import { assert } from '@ember/debug';
+import { all } from 'rsvp';
 import fetch from 'fetch';
+import Index from './internal/index';
 
 export default Service.extend({
 
   identifier: null,
+
+  content: null, // root
+  pages: null,   // array
+
+  init() {
+    this._super(...arguments);
+    this._internal = {
+      index: new Index(this)
+    };
+  },
 
   basePath: computed(function() {
     let identifier = this.get('identifier');
@@ -54,6 +66,49 @@ export default Service.extend({
     let url = this.resolveURL(path, 'json');
     return fetch(url).then(res => res.json());
   },
+
+  loadIndex() {
+    return this._internal.index.load().then(() => this);
+  },
+
+  loadPage(id) {
+    return this.loadIndex().then(() => {
+
+    });
+    // return all([
+    //   this.loadIndex(),
+    //   this.loadJSON(page)
+    // ]).then(([ _, json ]) => {
+    //   console.log(json);
+    // });
+  },
+
+  load(opts={}) {
+    let { index, page } = opts;
+    assert(`'{ index: true }' and/or '{ page: id }' is required`, index || page);
+    if(page) {
+      return this.loadPage(page);
+    } else {
+      return this.loadIndex();
+    }
+  },
+
+  _pageFactoryNameForId(id) {
+    let name;
+    if(typeof this.pageFactoryName === 'function') {
+      name = this.pageFactoryName(id);
+    } else {
+      name = this.pageFactoryName;
+    }
+    return name || 'remark-static:static/page';
+  },
+
+  _pageFactoryForId(id) {
+    let name = this._pageFactoryNameForId(id);
+    let factory = getOwner(this).factoryFor(name);
+    assert(`factory '${name} is not registered`, !!factory);
+    return factory;
+  }
 
   // preprocessIndex(/* json */) {
   // },

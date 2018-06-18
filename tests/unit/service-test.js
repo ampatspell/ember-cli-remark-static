@@ -33,4 +33,25 @@ module('service', function(hooks) {
     await load('tests/index/', hasContent);
   });
 
+  test('service loads index', async function(assert) {
+    let result = await this.service.load({ index: true });
+    assert.ok(result === this.service);
+
+    let content = result.get('content');
+
+    assert.deepEqual(content.getProperties('id', 'name', 'parent'), {
+      id: null,
+      name: null,
+      parent: null
+    });
+
+    let page = content.page('tests/articles/02-two');
+
+    assert.deepEqual(page.getProperties('id', 'name', 'parent.id'), {
+      id: 'tests/articles/02-two',
+      name: '02-two',
+      'parent.id': 'tests/articles'
+    });
+  });
+
 });
