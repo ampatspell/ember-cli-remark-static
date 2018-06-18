@@ -124,23 +124,39 @@ export default Service.extend({
 
   identifier: 'markdown',
 
-  preprocessIndex(/* json */) {
-  },
-
-  preprocessIndexItem(/* json */) {
-  },
-
-  preprocessPage(/* page, json */) {
-  },
-
-  preprocessNode(/* page, parent, node */) {
+  pageFactoryName(id) {
+    if(id) {
+      let [ folder, ...rest ] = id.split('/');
+      if(folder === 'articles') {
+        return 'model:article';
+      }
+    }
+    return 'model:page';
   }
 
 });
 ```
 
 ``` javascript
-// routes/application.js
+// models/page.js
+import Page from 'ember-cli-remark-static/static/page';
+
+export default Page.extend({
+
+  didLoadIndex() {
+  },
+
+  didLoadContent() {
+  },
+
+  preprocessNode(parent, node) {
+  }
+
+});
+```
+
+``` javascript
+// routes/pages/toc.js
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
@@ -149,7 +165,8 @@ export default Route.extend({
   markdown: service(),
 
   model() {
-    return this.get('markdown.index').load();
+    // loads only index
+    return this.get('markdown').load();
   }
 
 });
@@ -165,6 +182,7 @@ export default Route.extend({
   markdown: service(),
 
   model(params) {
+    // load page by id (loads index if not yet loaded)
     return this.get('markdown.pages').load(params.page_id);
   }
 

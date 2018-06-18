@@ -2,13 +2,23 @@ import Service from '@ember/service';
 import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
 import { assert } from '@ember/debug';
+import { resolve, reject } from 'rsvp';
 import fetch from 'fetch';
-
-const _protocol = value => value === 'undefined:' ? 'http:' : value;
+import Index from './internal/index';
 
 export default Service.extend({
 
   identifier: null,
+
+  content: null, // root
+  pages: null,   // array
+
+  init() {
+    this._super(...arguments);
+    this._internal = {
+      index: new Index(this)
+    };
+  },
 
   basePath: computed(function() {
     let identifier = this.get('identifier');
@@ -24,41 +34,87 @@ export default Service.extend({
     let fastboot = getOwner(this).lookup('service:fastboot');
     if(fastboot && fastboot.get('isFastBoot')) {
       let { protocol, host } = fastboot.get('request').getProperties('protocol', 'host');
-      protocol = _protocol(protocol);
+      if(protocol === 'undefined') {
+        protocol = 'http:';
+      }
       return `${protocol}//${host}${basePath}`;
     }
     return basePath;
   }).readOnly(),
 
-  index: computed(function() {
-    return getOwner(this).factoryFor('remark-static:static/index').create({ service: this });
-  }).readOnly(),
-
-  pages: computed(function() {
-    return getOwner(this).factoryFor('remark-static:static/pages').create({ service: this });
-  }).readOnly(),
-
   resolveURL(path, ext) {
     let base = this.get('baseURL');
+    if(path.startsWith('/')) {
+      path = path.slice(1);
+    }
+    if(path.endsWith('/')) {
+      path = path.slice(0, -1);
+    }
     let filename = ext ? `${path}.${ext}` : path;
     return `${base}/${filename}`;
   },
 
   loadJSON(path) {
     let url = this.resolveURL(path, 'json');
-    return fetch(url).then(res => res.json());
+    return resolve(fetch(url)).then(res => res.json());
   },
 
-  preprocessIndex(/* json */) {
+  loadIndex() {
+    return this._internal.index.load().then(() => this);
   },
 
-  preprocessIndexItem(/* json */) {
+  _loadPage(id) {
+    let page = this.page(id);
+    if(!page) {
+      let err = new Error(`Page ${id} was not found`);
+      err.code = 'not-found';
+      return reject(err);
+    }
+    return page.load();
   },
 
-  preprocessPage(/* page, json */) {
+  loadPage(id) {
+    return this.loadIndex().then(() => this._loadPage(id));
   },
 
-  preprocessNode(/* page, parent, node */) {
+  load(opts) {
+    if(typeof opts === 'string') {
+      opts = { page: opts };
+    } else if(!opts) {
+      opts = { index: true };
+    }
+    let { index, page } = opts;
+    assert(`'{ index: true }' and/or '{ page: id }' is required`, index || page);
+    if(page) {
+      return this.loadPage(page);
+    } else {
+      return this.loadIndex();
+    }
+  },
+
+  page(id) {
+    let content = this.get('content');
+    if(!content) {
+      return;
+    }
+    return content.page(id);
+  },
+
+  _pageFactoryNameForId(id) {
+    let name;
+    if(typeof this.pageFactoryName === 'function') {
+      name = this.pageFactoryName(id);
+    } else {
+      name = this.pageFactoryName;
+    }
+    return name || 'remark-static:static/page';
+  },
+
+  _pageFactoryForId(id) {
+    let name = this._pageFactoryNameForId(id);
+    let factory = getOwner(this).factoryFor(name);
+    assert(`factory '${name} is not registered`, !!factory);
+    return factory;
   }
 
 });
