@@ -35,7 +35,7 @@ export default class Index {
         mapping[id] = page;
         pages.push(page);
         let parent = parentId ? createPage(parentId) : root;
-        parent.addPage(page);
+        parent._addPage(page);
       }
 
       return page;

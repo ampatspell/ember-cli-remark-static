@@ -13,14 +13,8 @@ export default EmberObject.extend({
     return A();
   }).readOnly(),
 
-  detach() {
-    let parent = this.get('parent');
-    if(parent) {
-      parent.get('pages').removeObject(this);
-    }
-  },
 
-  addPage(page) {
+  _addPage(page) {
     page.set('parent', this);
     this.get('pages').addObject(page);
   },
