@@ -8,7 +8,7 @@ module('Acceptance | pages', function(hooks) {
   test('custom components has content', async function(assert) {
     await visit('/pages/custom-components');
     assert.equal(currentURL(), '/pages/custom-components');
-    assert.equal(find('h1 a').innerText, 'Custom components');
+    assert.equal(find('h1').innerText, 'Custom components');
   });
 
 });
