@@ -43,6 +43,7 @@ export default EmberObject.extend({
     delete json.data;
     delete json.frontmatter;
     this.set('content', json);
+    this._didLoadContent();
   },
 
   _createLoadPromise() {
@@ -62,6 +63,21 @@ export default EmberObject.extend({
   },
 
   preprocessNode() {
+  },
+
+  didLoadIndex() {
+  },
+
+  _didLoadIndex() {
+    this.get('pages').map(page => page._didLoadIndex());
+    this.didLoadIndex();
+  },
+
+  didLoadContent() {
+  },
+
+  _didLoadContent() {
+    this.didLoadContent();
   },
 
   toStringExtension() {

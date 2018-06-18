@@ -57,6 +57,8 @@ export default class Index {
       content,
       pages
     });
+
+    content._didLoadIndex();
   }
 
   createLoadPromise() {
