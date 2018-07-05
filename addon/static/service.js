@@ -5,6 +5,14 @@ import { assert } from '@ember/debug';
 import { resolve, reject } from 'rsvp';
 import fetch from 'fetch';
 import Index from './internal/index';
+import json from 'ember-cli-remark-static/-index';
+
+const indexForIdentifier = identifier => {
+  assert(`identifier is required`, !!identifier);
+  let index = json[identifier];
+  assert(`static content for identifier '${identifier}' not found`, !!index);
+  return index;
+}
 
 export default Service.extend({
 
@@ -16,7 +24,7 @@ export default Service.extend({
   init() {
     this._super(...arguments);
     this._internal = {
-      index: new Index(this)
+      index: new Index(this, indexForIdentifier(this.get('identifier')))
     };
   },
 
@@ -59,11 +67,7 @@ export default Service.extend({
     return resolve(fetch(url)).then(res => res.json());
   },
 
-  loadIndex() {
-    return this._internal.index.load().then(() => this);
-  },
-
-  _loadPage(id) {
+  load(id) {
     let page = this.page(id);
     if(!page) {
       let err = new Error(`Page ${id} was not found`);
@@ -71,25 +75,6 @@ export default Service.extend({
       return reject(err);
     }
     return page.load();
-  },
-
-  loadPage(id) {
-    return this.loadIndex().then(() => this._loadPage(id));
-  },
-
-  load(opts) {
-    if(typeof opts === 'string') {
-      opts = { page: opts };
-    } else if(!opts) {
-      opts = { index: true };
-    }
-    let { index, page } = opts;
-    assert(`'{ index: true }' and/or '{ page: id }' is required`, index || page);
-    if(page) {
-      return this.loadPage(page);
-    } else {
-      return this.loadIndex();
-    }
   },
 
   page(id) {

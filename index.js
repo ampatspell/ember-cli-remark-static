@@ -1,13 +1,23 @@
 'use strict';
 
 let merge = require('broccoli-merge-trees');
-let remarkTree = require('./lib');
+let remark = require('./lib');
 
 module.exports = {
   name: 'ember-cli-remark-static',
   // isDevelopingAddon() {
   //   return true;
   // },
+  remark() {
+    let instance = this._remark;
+    if(!instance) {
+      let options = this.app.options['ember-cli-remark-static'];
+      let root = this.app.project.root;
+      instance = remark(root, options);
+      this._remark = instance;
+    }
+    return instance;
+  },
   included() {
     this._super.included(...arguments);
 
@@ -22,6 +32,8 @@ module.exports = {
     for(let key in paths) {
       exclude.push(`assets/ember-cli-remark-static/${key}`);
     }
+
+    this.app.import('vendor/ember-cli-remark-static/-index.js');
   },
   treeForPublic(tree) {
     let trees = [];
@@ -29,10 +41,19 @@ module.exports = {
       trees.push(tree);
     }
 
-    let options = this.app.options['ember-cli-remark-static'];
-    let root = this.app.project.root;
+    let { content } = this.remark();
+    trees.push(content);
 
-    trees.push(remarkTree(root, options));
+    return merge(trees);
+  },
+  treeForVendor(tree) {
+    let trees = [];
+    if(tree) {
+      trees.push(tree);
+    }
+
+    let { index } = this.remark();
+    trees.push(index);
 
     return merge(trees);
   }

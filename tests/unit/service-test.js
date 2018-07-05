@@ -1,24 +1,11 @@
 import { module, test } from 'qunit';
 import setupServiceTest from '../helpers/setup-service-test';
-import { A } from '@ember/array';
 
 module('service', function(hooks) {
   setupServiceTest(hooks);
 
   test('service exists', function(assert) {
     assert.ok(this.service);
-  });
-
-  test('service loads root json', async function(assert) {
-    const load = async (name, condition) => {
-      let json = await this.service.loadJSON(name);
-      assert.ok(condition(json));
-    };
-    const hasIndex = json => A(json).findBy('id', 'index');
-    await load('_index', hasIndex);
-    await load('/_index', hasIndex);
-    await load('_index/', hasIndex);
-    await load('/_index/', hasIndex);
   });
 
   test('service loads nested json', async function(assert) {
@@ -34,10 +21,7 @@ module('service', function(hooks) {
   });
 
   test('service loads index', async function(assert) {
-    let result = await this.service.load({ index: true });
-    assert.ok(result === this.service);
-
-    let content = result.get('content');
+    let content = this.service.get('content');
 
     assert.deepEqual(content.getProperties('id', 'name', 'parent'), {
       id: null,
@@ -55,7 +39,7 @@ module('service', function(hooks) {
   });
 
   test('load page content', async function(assert) {
-    let page = await this.service.load({ page: 'tests/index' });
+    let page = await this.service.load('tests/index');
     assert.deepEqual(page.getProperties('id', 'name'), {
       id: 'tests/index',
       name: 'index'
@@ -64,7 +48,7 @@ module('service', function(hooks) {
 
   test('load missing page', async function(assert) {
     try {
-      await this.service.load({ page: 'tests/foobar' });
+      await this.service.load('tests/foobar');
     } catch(err) {
       assert.equal(err.code, 'not-found');
     }

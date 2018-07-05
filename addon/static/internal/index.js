@@ -3,12 +3,9 @@ import { assign } from '@ember/polyfills';
 
 export default class Index {
 
-  constructor(service) {
+  constructor(service, json) {
     this.service = service;
-  }
-
-  loadJSON(...args) {
-    return this.service.loadJSON(...args);
+    this.deserialize(json);
   }
 
   createPageForId(id, props) {
@@ -59,21 +56,6 @@ export default class Index {
     });
 
     content._didLoadIndex();
-  }
-
-  createLoadPromise() {
-    return this.loadJSON('_index')
-      .then(json => this.deserialize(json))
-      .then(() => this);
-  }
-
-  load() {
-    let promise = this._promise;
-    if(!promise) {
-      promise = this.createLoadPromise();
-      this._promise = promise;
-    }
-    return promise;
   }
 
 }
