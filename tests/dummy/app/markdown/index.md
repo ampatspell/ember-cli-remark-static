@@ -24,16 +24,19 @@ let app = new EmberAddon(defaults, {
 });
 ```
 
-## Load `_index.json`
+## Import index
 
 ``` javascript
-fetch('/assets/ember-cli-remark-static/markdown/_index.json');
+import index from 'ember-cli-remark-static/-index';
 ```
 
 ``` json
 [
   {
     "id": "index",
+    "frontmatter": {
+      ...
+    },
     "headings": [
       {
         "level": "1",
