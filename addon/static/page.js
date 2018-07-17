@@ -35,6 +35,9 @@ export default EmberObject.extend({
   },
 
   page(id) {
+    if(id.endsWith('/')) {
+      id = id.slice(0, -1);
+    }
     let components = id.split('/');
     return this._page(components);
   },
