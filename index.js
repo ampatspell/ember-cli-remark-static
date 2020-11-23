@@ -4,10 +4,7 @@ let merge = require('broccoli-merge-trees');
 let remark = require('./lib');
 
 module.exports = {
-  name: 'ember-cli-remark-static',
-  // isDevelopingAddon() {
-  //   return true;
-  // },
+  name: require('./package').name,
   remark() {
     let instance = this._remark;
     if(!instance) {
@@ -19,7 +16,7 @@ module.exports = {
     return instance;
   },
   included() {
-    this._super.included(...arguments);
+    this._super.included.apply(this, arguments);
 
     let options = this.app.options;
     options.fingerprint = options.fingerprint || {};

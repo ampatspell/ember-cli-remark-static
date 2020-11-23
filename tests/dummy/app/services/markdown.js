@@ -1,8 +1,9 @@
 import Service from 'ember-cli-remark-static/static/service';
 
-export default Service.extend({
+export default class MarkdownService extends Service {
 
-  identifier: 'markdown',
-  pageFactoryName: 'model:page'
+  identifier = 'markdown'
 
-});
+  pageFactoryName = 'model:page'
+
+}

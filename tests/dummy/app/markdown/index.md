@@ -1,6 +1,6 @@
 # [ember-cli-remark-static](https://github.com/ampatspell/ember-cli-remark-static)
 
-This addon lets you to add one or more folders with markdown files which are parsed on build to json element tree and then can be rendered by using provided `ui-remark/render` component.
+This addon lets you to add one or more folders with markdown files which are parsed on build to json element tree and then can be rendered by using provided `<Remark::Render/>` component.
 
 Works with `ember-cli-fastboot` and `prember`.
 
@@ -111,21 +111,15 @@ fetch('/assets/ember-cli-remark-static/markdown/index.json')
 }
 ```
 
-## Render parsed markdown
-
-``` hbs
-{{ui-remark/render node=root settings=settings}}
-```
-
 ## Using loader service
 
 ``` javascript
 // services/markdown.js
 import Service from 'ember-cli-remark-static/static/service';
 
-export default Service.extend({
+export default class MarkdownService extends Service {
 
-  identifier: 'markdown',
+  identifier = 'markdown'
 
   pageFactoryName(id) {
     if(id) {
@@ -137,17 +131,14 @@ export default Service.extend({
     return 'model:page';
   }
 
-});
+}
 ```
 
 ``` javascript
 // models/page.js
 import Page from 'ember-cli-remark-static/static/page';
 
-export default Page.extend({
-
-  didLoadIndex() {
-  },
+export default class MarkdownPage extends Page {
 
   didLoadContent() {
   },
@@ -155,24 +146,7 @@ export default Page.extend({
   preprocessNode(parent, node) {
   }
 
-});
-```
-
-``` javascript
-// routes/pages/toc.js
-import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
-
-export default Route.extend({
-
-  markdown: service(),
-
-  model() {
-    // loads only index
-    return this.get('markdown').load();
-  }
-
-});
+};
 ```
 
 ``` javascript
@@ -180,20 +154,21 @@ export default Route.extend({
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
+export default class PageRoute extends Route {
 
-  markdown: service(),
+  @service
+  markdown
 
-  model(params) {
-    // load page by id (loads index if not yet loaded)
-    return this.get('markdown.pages').load(params.page_id);
+  model({ page_id : id }) {
+    // load page by id
+    return this.markdown.load(id);
   }
 
-});
+}
 ```
 
 ``` hbs
-{{ui-remark/render page=model}}
+<Remark::Render @page={{@model}}/>
 ```
 
 ## Examples

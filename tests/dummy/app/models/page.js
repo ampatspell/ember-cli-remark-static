@@ -6,13 +6,13 @@ export default Page.extend({
     if(node.tagName === 'img') {
       let src = node.properties.src;
       if(src.startsWith('/')) {
-        let baseURL = this.get('service.baseURL');
+        let baseURL = this.service.baseURL;
         node.properties.src = `${baseURL}${src}`;
       }
     } else if(node.tagName === 'a') {
       let href = node.properties.href;
       if(href.startsWith('/')) {
-        node.componentName = 'ui-remark/render/route';
+        node.componentName = 'remark/render/route';
         let url = href.substr(1);
         let routeName;
         let id;
@@ -28,7 +28,8 @@ export default Page.extend({
       }
     } else if(node.tagName === 'image-gallery') {
       // choose a compoent name for <image-gallery></image-gallery> element
-      node.componentName = 'image-gallery';
+      // by default it tries to render remark/render/image-gallery
+      node.componentName = 'custom/image-gallery';
     }
   }
 

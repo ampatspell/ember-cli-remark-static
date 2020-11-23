@@ -1,5 +1,8 @@
 import { A } from '@ember/array';
-import { assign } from '@ember/polyfills';
+
+const {
+  assign
+} = Object;
 
 export default class Index {
 
@@ -50,12 +53,10 @@ export default class Index {
       pages
     } = this.deserializePages(json);
 
-    this.service.setProperties({
-      content,
-      pages
-    });
+    let { service } = this;
 
-    content._didLoadIndex();
+    service.content = content;
+    service.pages = pages;
   }
 
 }
