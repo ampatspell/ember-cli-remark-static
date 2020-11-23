@@ -1,24 +1,22 @@
 import EmberRouter from '@ember/routing/router';
-import config from './config/environment';
+import config from 'dummy/config/environment';
 
-let first = true;
+// let first = true;
 
-const Router = EmberRouter.extend({
-  location: config.locationType,
-  rootURL: config.rootURL,
+export default class Router extends EmberRouter {
+  location = config.locationType;
+  rootURL = config.rootURL;
 
-  didTransition() {
-    if(window.scrollTo && !first) {
-      first = false;
-      window.scrollTo(0, 0);
-    }
-    this._super(...arguments);
-  }
+  // didTransition() {
+  //   if(window.scrollTo && !first) {
+  //     first = false;
+  //     window.scrollTo(0, 0);
+  //   }
+  //   this._super(...arguments);
+  // }
 
-});
+}
 
 Router.map(function() {
   this.route('pages', { path: '/pages/*page_id' });
 });
-
-export default Router;

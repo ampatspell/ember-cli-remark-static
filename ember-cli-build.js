@@ -6,7 +6,7 @@ const crawl = require('prember-crawler');
 module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
     'ember-cli-remark-static': {
-      debug: true,
+      debug: false,
       paths: {
         'markdown': 'tests/dummy/app/markdown'
       }

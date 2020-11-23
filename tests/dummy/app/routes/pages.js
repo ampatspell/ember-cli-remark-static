@@ -1,12 +1,13 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
+export default class IndexRoute extends Route {
 
-  markdown: service(),
+  @service
+  markdown
 
-  model(params) {
-    return this.get('markdown').load(params.page_id);
+  model({ page_id: id }) {
+    return this.markdown.load(id);
   }
 
-});
+}

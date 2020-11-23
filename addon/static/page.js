@@ -1,24 +1,26 @@
-import EmberObject, { computed } from '@ember/object';
+import EmberObject from '@ember/object';
 import { A } from '@ember/array';
+import { tracked } from '@glimmer/tracking'
 
-export default EmberObject.extend({
+export default class Page extends EmberObject {
 
-  service: null,
+  id = null
+  headings = null
+  frontmatter = null
 
-  // index
-  id: null,
-  headings: null,
-  frontmatter: null,
+  @tracked
+  parent = null
 
-  parent: null,
-  pages: computed(function() {
-    return A();
-  }).readOnly(),
+  @tracked
+  content
+
+  @tracked
+  pages = A();
 
   _addPage(page) {
-    page.set('parent', this);
-    this.get('pages').addObject(page);
-  },
+    page.parent = this;
+    this.pages.addObject(page);
+  }
 
   _page(components) {
     if(components.length === 0) {
@@ -26,35 +28,58 @@ export default EmberObject.extend({
     }
 
     let id = components.shift();
-    let page = this.get('pages').findBy('name', id);
+    let page = this.pages.findBy('name', id);
     if(!page) {
       return;
     }
 
     return page._page(components);
-  },
+  }
 
-  page(id) {
-    if(id.endsWith('/')) {
-      id = id.slice(0, -1);
+  //
+
+  didLoadContent() {
+  }
+
+  preprocessNode() {
+  }
+
+  componentNameForNode(child) {
+    let type = child.type;
+    let name;
+    if(type === 'element') {
+      name = child.tagName;
+    } else {
+      name = type;
     }
-    let components = id.split('/');
-    return this._page(components);
-  },
+    return `remark/render/${name}`;
+  }
+
+  _preprocessNode(parent, node) {
+    node.page = this;
+    node.parent = parent;
+    node.componentName = this.componentNameForNode(node);
+
+    this.preprocessNode(parent, node);
+
+    let { children } = node;
+    children && children.forEach(child => this._preprocessNode(node, child));
+  }
 
   _deserialize(json) {
     delete json.data;
     delete json.frontmatter;
-    this.set('content', json);
-    this._didLoadContent();
-  },
+    this._preprocessNode(null, json);
+    this.content = json;
+    this.didLoadContent();
+  }
 
-  _createLoadPromise() {
-    let { id, service } = this.getProperties('id', 'service');
-    return service.loadJSON(id)
-      .then(json => this._deserialize(json))
-      .then(() => this);
-  },
+  async _createLoadPromise() {
+    let { id, service } = this;
+    let json = await service.loadJSON(id);
+    this._deserialize(json);
+    return this;
+  }
 
   load() {
     let promise = this._promise;
@@ -63,28 +88,22 @@ export default EmberObject.extend({
       this._promise = promise;
     }
     return promise;
-  },
-
-  preprocessNode() {
-  },
-
-  didLoadIndex() {
-  },
-
-  _didLoadIndex() {
-    this.get('pages').map(page => page._didLoadIndex());
-    this.didLoadIndex();
-  },
-
-  didLoadContent() {
-  },
-
-  _didLoadContent() {
-    this.didLoadContent();
-  },
-
-  toStringExtension() {
-    return this.get('id');
   }
 
-});
+  //
+
+  page(id) {
+    if(id.endsWith('/')) {
+      id = id.slice(0, -1);
+    }
+    let components = id.split('/');
+    return this._page(components);
+  }
+
+  //
+
+  toStringExtension() {
+    return this.id;
+  }
+
+}

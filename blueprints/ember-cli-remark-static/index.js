@@ -1,9 +1,7 @@
-var RSVP = require('rsvp');
-
 module.exports = {
   normalizeEntityName() {
   },
-  afterInstall() {
-    return this.addAddonToProject('ember-fetch');
+  async afterInstall() {
+    await this.addAddonToProject('ember-fetch');
   }
 };

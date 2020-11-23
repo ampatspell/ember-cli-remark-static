@@ -17,7 +17,9 @@ Ok, moving on...
 To do that, set `componentName` for node to `image-gallery` in [settings](/pages/settings):
 
 ``` javascript
-export default EmberObject.extend({
+import Page from 'ember-cli-remark-static/static/page';
+
+export default class MarkdownPage extends Page {
 
   preprocessNode(parent, node) {
     if(node.tagName === 'image-gallery') {
@@ -25,29 +27,40 @@ export default EmberObject.extend({
     }
   }
 
-});
+};
 ```
 
 Implement component:
 
 ``` javascript
-export default Component.extend({
-  classNameBindings: [ ':image-gallery' ],
+import Element from 'ember-cli-remark-static/components/remark/render/element';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-  node: null,
-  root: null,
+export default class ImageGalleryComponent extends Element {
 
-});
+  @tracked
+  count = 0
+
+  @action
+  onClick() {
+    this.count++;
+  }
+
+}
 ```
 
 ``` hbs
-<div>this: {{this}}</div>
-<div>root: {{root}}</div>
-<div>root.settings {{root.settings}}</div>
-<div>node.properties.name: {{node.properties.name}}</div>
-<div>clicks: {{count}}</div>
+<div class="custom-image-gallery" role="button" {{on "click" this.onClick}}>
 
-{{ui-remark/render/content node=node parent=this}}
+  <div>this: {{this}}</div>
+  <div>root.settings {{this.root.settings}}</div>
+  <div>node.properties.name: {{@node.properties.name}}</div>
+  <div>clicks: {{this.count}}</div>
+
+  <Remark::Render::Content @node={{@node}} @parent={{this}}/>
+
+</div>
 ```
 
 And render:
