@@ -1,6 +1,6 @@
 import Page from 'ember-cli-remark-static/static/page';
 
-export default Page.extend({
+export default class DummyPage extends Page {
 
   preprocessNode(parent, node) {
     if(node.tagName === 'img') {
@@ -33,4 +33,4 @@ export default Page.extend({
     }
   }
 
-});
+}
