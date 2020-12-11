@@ -13,6 +13,7 @@ export default class RemarkRenderElementComponent extends Component {
         }
       }
     }
+    return undefined;
   }
 
 }

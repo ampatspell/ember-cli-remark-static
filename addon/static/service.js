@@ -4,6 +4,7 @@ import { assert } from '@ember/debug';
 import json from 'ember-cli-remark-static/-index';
 import Index from './internal/index';
 import fetch from 'fetch';
+import classic from 'ember-classic-decorator';
 
 const indexForIdentifier = identifier => {
   assert(`identifier is required`, !!identifier);
@@ -12,6 +13,7 @@ const indexForIdentifier = identifier => {
   return index;
 }
 
+@classic
 export default class RemarkStaticService extends Service {
 
   identifier = null
@@ -76,7 +78,9 @@ export default class RemarkStaticService extends Service {
     let name = this._pageFactoryNameForId(id);
     let factory = getOwner(this).factoryFor(name);
     assert(`factory '${name} is not registered`, !!factory);
-    return factory;
+    return {
+      create: props => new factory.class(getOwner(this), props)
+    };
   }
 
   async loadJSON(path) {

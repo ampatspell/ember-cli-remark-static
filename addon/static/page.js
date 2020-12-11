@@ -1,8 +1,12 @@
-import EmberObject from '@ember/object';
 import { A } from '@ember/array';
-import { tracked } from '@glimmer/tracking'
+import { setOwner } from '@ember/application';
+import { tracked } from '@glimmer/tracking';
 
-export default class Page extends EmberObject {
+const {
+  assign
+} = Object;
+
+export default class Page {
 
   id = null
   headings = null
@@ -16,6 +20,11 @@ export default class Page extends EmberObject {
 
   @tracked
   pages = A();
+
+  constructor(owner, props) {
+    setOwner(this, owner);
+    assign(this, props);
+  }
 
   _addPage(page) {
     page.parent = this;
