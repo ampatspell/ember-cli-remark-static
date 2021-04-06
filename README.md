@@ -1,7 +1,89 @@
 # ember-cli-remark-static
 
-This addon let's you have one or more folders with markdown files which are transformed to abstact syntax tree by [remark](https://remark.js.org/) and made available as a json files.
+## Install
 
-Also it has component to render those json objects.
+``` bash
+$ ember install ember-cli-remark-static
+```
 
-[Demo and documentation is here](https://ember-cli-remark-static.firebaseapp.com/).
+## Configure collections
+
+``` js
+// ember-cli-build.js
+let app = new EmberAddon(defaults, {
+  remark: {
+    collections: {
+      // identifier: directory
+      'content': 'markdown/content'
+    }
+  }
+});
+```
+
+## Subclass files service for each collection
+
+``` js
+// app/services/content.js
+import FilesService from 'remark/services/files';
+
+export default class Content extends FilesService {
+  identifier = 'content';
+}
+```
+
+## Load files index
+
+``` js
+import Route from '@ember/routing/route';
+import { inject as service } from "@ember/service";
+
+export default class ApplicationRoute extends Route {
+
+  @service content;
+
+  async beforeModel() {
+    await this.content.load();
+  }
+
+}
+```
+
+## Load file
+
+``` js
+let file = this.content.file('hello.md');
+await file.load();
+```
+
+## Preprocess markdown
+
+``` js
+import { setOwner } from '@ember/application';
+import { reads } from "macro-decorators";
+import { remark } from 'remark/decorators';
+
+export default class Page {
+
+  constructor(owner, { file }) {
+    setOwner(this, owner);
+    this.file = file;
+  }
+
+  @reads('file.body') body;
+
+  @remark('body')
+  tree(node) {
+    if(node.tagName === 'h1') {
+      node.children[0].value = 'Hey there';
+    }
+    return node;
+  }
+
+}
+```
+
+## Render
+
+``` hbs
+<Remark class="content" @tree={{@page.tree}}/>
+```

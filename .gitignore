@@ -12,6 +12,7 @@
 /.env*
 /.pnp*
 /.sass-cache
+/.eslintcache
 /connect.lock
 /coverage/
 /libpeerconnection.log
@@ -25,6 +26,3 @@
 /package.json.ember-try
 
 .DS_Store
-
-/ember-cli-remark-static-debug
-/.firebase/

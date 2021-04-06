@@ -1,0 +1,12 @@
+<div class="route-page">
+  {{#if @page}}
+    <Remark class="remark" @tree={{@page.tree}}/>
+  {{else}}
+    <div class="placeholder">
+      <div class="title">Page "{{@slug}}" was not found</div>
+      <div class="actions">
+        ← <LinkTo @route="index">back to index</LinkTo>
+      </div>
+    </div>
+  {{/if}}
+</div>

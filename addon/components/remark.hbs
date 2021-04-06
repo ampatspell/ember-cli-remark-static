@@ -1,0 +1,14 @@
+<div class="remark" ...attributes {{did-update this.didUpdateContent this.content}}>
+  {{#if this.dom}}
+    {{this.dom.element}}
+    {{#each this.dom.components as |hash|}}
+      {{#in-element hash.element}}
+        {{component hash.name model=hash.model content=hash.content}}
+      {{/in-element}}
+    {{/each}}
+  {{else if this.isLoading}}
+    <div class="placeholder">Loading…</div>
+  {{else if this.isError}}
+    <div class="placeholder">{{this.error.message}}</div>
+  {{/if}}
+</div>
