@@ -89,14 +89,18 @@ export default class Page {
     return node;
   }
 
+  async load() {
+    await this.file.load();
+    await this.tree.load();
+  }
+
 }
 ```
 
 ``` js
 let file = this.content.file('hello.md');
-await file.load();
-
 let page = new Page({ file });
+await page.load();
 ```
 
 # Render markdown

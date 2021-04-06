@@ -79,6 +79,12 @@ export default class Page {
     return node;
   }
 
+  async load() {
+    await this.file.load();
+    await this.tree.load(); // eager.
+    return this;
+  }
+
 }
 ```
 
