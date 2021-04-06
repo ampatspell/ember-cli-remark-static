@@ -1,13 +1,21 @@
 {
   "name": "ember-cli-remark-static",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "3.0.0",
+  "description": "Markdown for Ember.js with component support",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "markdown",
+    "remark"
   ],
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ampatspell/ember-cli-remark-static.git"
+  },
   "license": "MIT",
-  "author": "",
+  "author": "Arnis Vuskans <ampatspell@gmail.com> (http://www.amateurinmotion.com/)",
+  "funding": {
+    "url": "https://github.com/sponsors/ampatspell"
+  },
   "directories": {
     "doc": "doc",
     "test": "tests"
