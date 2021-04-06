@@ -23,7 +23,8 @@ export default class AssetMapService extends Service {
 
     let res = await fetch('/assets/assetMap.json');
     if(res.status === 404) {
-      throw new Error('assetMap.json was not found');
+      this.didLoad(null);
+      return;
     }
 
     let json = await res.json();

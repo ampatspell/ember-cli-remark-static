@@ -5,6 +5,7 @@ import { cached } from "tracked-toolbox";
 import { sortedBy } from '../util/array';
 import { oncePromise } from '../util/once';
 import { assert } from '@ember/debug';
+import fetch from 'fetch';
 
 export default class FilesService extends Service {
 

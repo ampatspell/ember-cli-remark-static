@@ -34,4 +34,8 @@ export default class Page {
     return node;
   }
 
+  async load() {
+    await this.tree.load();
+  }
+
 }

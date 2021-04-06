@@ -2,7 +2,17 @@ import { assert } from '@ember/debug';
 
 const attributes = [ 'src', 'alt', 'href', 'target' ];
 
+const createDocument = () => {
+  if(typeof document === 'undefined') {
+    // eslint-disable-next-line no-undef
+    let { Document } = FastBoot.require('simple-dom');
+    return new Document();
+  }
+  return document;
+}
+
 export const toDOM = tree => {
+  let document = createDocument();
   let components = [];
 
   const toElements = (parent, nodes=[]) => {
@@ -18,14 +28,15 @@ export const toDOM = tree => {
   const createElement = (name, node, className) => {
     let element = document.createElement(name);
     let properties = node.properties;
+    let classNames = [];
     if(properties) {
-      properties.className?.forEach(className => {
-        element.classList.add(className);
-      });
+      if(properties.className) {
+        classNames.push(...properties.className);
+      }
       for(let key in properties) {
         if(attributes.includes(key)) {
           let value = properties[key];
-          element[key] = value;
+          element.setAttribute(key, value);
         } else {
           // temporary
           if(key !== 'className') {
@@ -35,7 +46,10 @@ export const toDOM = tree => {
       }
     }
     if(className) {
-      element.classList.add(className);
+      classNames.push(className);
+    }
+    if(classNames.length) {
+      element.setAttribute('class', classNames.join(' '));
     }
     return element;
   }

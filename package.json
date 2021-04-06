@@ -13,7 +13,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
+    "build": "WITH_FASTBOOT=true ember build --environment=production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:hbs": "ember-template-lint .",
@@ -45,6 +45,7 @@
     "remark-highlight.js": "^6.0.0",
     "remark-parse": "^9.0.0",
     "remark-rehype": "^8.0.0",
+    "simple-dom": "^1.4.0",
     "tracked-toolbox": "^1.2.3",
     "unified": "^9.2.1"
   },
@@ -57,6 +58,7 @@
     "broccoli-asset-rev": "^3.0.0",
     "ember-cli": "~3.25.2",
     "ember-cli-dependency-checker": "^3.2.0",
+    "ember-cli-fastboot": "^2.2.3",
     "ember-cli-inject-live-reload": "^2.0.2",
     "ember-cli-sass": "^10.0.1",
     "ember-cli-sri": "^2.1.1",
@@ -79,11 +81,17 @@
     "eslint-plugin-prettier": "^3.3.1",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
+    "prember": "^1.0.5",
+    "prember-crawler": "^1.0.0",
+    "prember-middleware": "^0.1.0",
     "prettier": "^2.2.1",
     "qunit": "^2.14.0",
     "qunit-dom": "^1.6.0",
     "sass": "^1.32.8"
   },
+  "fastbootDependencies": [
+    "simple-dom"
+  ],
   "engines": {
     "node": "10.* || >= 12"
   },

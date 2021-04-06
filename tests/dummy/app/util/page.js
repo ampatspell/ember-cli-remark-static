@@ -10,5 +10,8 @@ export const load = async (caller, name) => {
   let file = content.file(name);
   await file.load();
 
-  return models.create('page', { file });
+  let model = models.create('page', { file });
+  await model.load();
+
+  return model;
 }
