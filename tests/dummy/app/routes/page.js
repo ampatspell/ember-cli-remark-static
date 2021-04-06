@@ -10,8 +10,8 @@ export default class IndexRoute extends Route {
     let file = this.content.find(file => file.attributes.slug === slug);
     let page;
     if(file) {
-      await file.load();
       page = this.models.create('page', { file });
+      await page.load();
     }
     return {
       slug,

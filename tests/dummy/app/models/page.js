@@ -35,6 +35,7 @@ export default class Page {
   }
 
   async load() {
+    await this.file.load();
     await this.tree.load();
   }
 
