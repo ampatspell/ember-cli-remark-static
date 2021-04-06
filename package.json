@@ -34,7 +34,7 @@
     "test:ember-compatibility": "ember try:each",
     "bump": "npm version minor; git push --follow-tags",
     "patch": "npm version patch; git push --follow-tags",
-    "deploy": "ember build -prod && firebase deploy"
+    "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
     "@ember/render-modifiers": "^1.0.2",
