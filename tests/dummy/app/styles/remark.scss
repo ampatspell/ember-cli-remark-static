@@ -1,0 +1,63 @@
+.remark {
+  @import "hljs/index";
+  @mixin header-code($size: yes) {
+    > code {
+      font-family: $font-code;
+      display: inline-block;
+      @if($size == yes) {
+        font-size: 14px;
+      }
+    }
+  }
+  h1 {
+    font-weight: 400;
+    font-size: 21px;
+    @include header-code(no);
+    margin: 50px 0 25px 0;
+  }
+  h2 {
+    font-weight: 400;
+    font-size: 18px;
+    @include header-code(no);
+    margin: 50px 0 25px 0;
+  }
+  h3 {
+    font-weight: 400;
+    font-size: 17px;
+    @include header-code(no);
+  }
+  blockquote {
+    margin: 0;
+    border-left: 2px solid #ddd;
+    padding: 0 0 0 10px;
+  }
+  li {
+    padding: 0 0 5px 0;
+    > p {
+      margin: 0;
+    }
+    > ul {
+      padding: 5px 0 0 10px;
+    }
+    &:last-child {
+      padding: 0;
+    }
+  }
+  code {
+    font-family: $font-code;
+    display: inline-block;
+    font-weight: 600;
+  }
+  pre code {
+    font-weight: 400;
+  }
+  *:first-child {
+    margin-top: 0;
+  }
+  *:last-child {
+    margin-bottom: 0;
+  }
+  span.component {
+    display: inline-block;
+  }
+}

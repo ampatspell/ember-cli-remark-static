@@ -1,57 +1,39 @@
 'use strict';
 
-let merge = require('broccoli-merge-trees');
-let remark = require('./lib');
+const path = require('path');
+const funnel = require('broccoli-funnel');
+const writeFile = require('broccoli-file-creator');
+const mergeTrees = require('broccoli-merge-trees');
+const metadata = require('./lib/metadata');
+
+const extensions = [ 'md', 'png', 'jpg' ];
+
+const defaults = {
+  collections: {}
+};
 
 module.exports = {
-  name: require('./package').name,
-  remark() {
-    let instance = this._remark;
-    if(!instance) {
-      let options = this.app.options['ember-cli-remark-static'];
-      let root = this.app.project.root;
-      instance = remark(root, options);
-      this._remark = instance;
-    }
-    return instance;
+  name: 'remark',
+  isDevelopingAddon() {
+    return true;
   },
-  included() {
+  included(app, parentAddon) {
     this._super.included.apply(this, arguments);
-
-    let options = this.app.options;
-    options.fingerprint = options.fingerprint || {};
-    let fingerprint = options.fingerprint;
-    fingerprint.exclude = fingerprint.exclude || [];
-    let exclude = fingerprint.exclude;
-
-    let remark = this.app.options['ember-cli-remark-static'] || {};
-    let paths = remark.paths || {};
-    for(let key in paths) {
-      exclude.push(`assets/ember-cli-remark-static/${key}`);
-    }
-
-    this.app.import('vendor/ember-cli-remark-static/-index.js');
+    this.remark = Object.assign({}, defaults, (parentAddon || app).options['remark']);
   },
-  treeForPublic(tree) {
+  treeForPublic() {
+    let { remark } = this;
     let trees = [];
-    if(tree) {
+    for(let identifier in remark.collections) {
+      let dir = path.resolve(remark.collections[identifier]);
+      let content = funnel(dir, {
+        destDir: `remark/${identifier}`,
+        include: [ `**/*.{${extensions.join(',')}}` ]
+      });
+      let index = writeFile(`remark/${identifier}/metadata.json`, metadata(dir, extensions));
+      let tree = mergeTrees([ content, index ]);
       trees.push(tree);
     }
-
-    let { content } = this.remark();
-    trees.push(content);
-
-    return merge(trees);
-  },
-  treeForVendor(tree) {
-    let trees = [];
-    if(tree) {
-      trees.push(tree);
-    }
-
-    let { index } = this.remark();
-    trees.push(index);
-
-    return merge(trees);
+    return mergeTrees(trees);
   }
 };

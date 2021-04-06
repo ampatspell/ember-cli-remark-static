@@ -1,36 +1,37 @@
-import Page from 'ember-cli-remark-static/static/page';
+import { setOwner } from '@ember/application';
+import { remark } from 'remark/util/remark';
+import { reads } from "macro-decorators";
 
-export default class DummyPage extends Page {
+export default class Page {
 
-  preprocessNode(parent, node) {
-    if(node.tagName === 'img') {
-      let src = node.properties.src;
-      if(src.startsWith('/')) {
-        let baseURL = this.service.baseURL;
-        node.properties.src = `${baseURL}${src}`;
+  constructor(owner, { file }) {
+    setOwner(this, owner);
+    this.file = file;
+  }
+
+  @reads('file.body') body;
+
+  @remark('body')
+  tree(node) {
+    if(node.tagName === 'a') {
+      let { properties: { href } } = node;
+      if(href.startsWith('http:') || href.startsWith('https:')) {
+        node.properties.target = 'top';
+      } else if(href.startsWith('/')) {
+        let slug = href.substr(1);
+        return {
+          type: 'component',
+          name: 'remark/link-to',
+          inline: true,
+          model: {
+            route: 'page',
+            model: slug
+          },
+          children: node.children
+        };
       }
-    } else if(node.tagName === 'a') {
-      let href = node.properties.href;
-      if(href.startsWith('/')) {
-        node.componentName = 'remark/render/route';
-        let url = href.substr(1);
-        let routeName;
-        let id;
-        let components = url.split('/');
-        if(components[0] === 'pages') {
-          routeName = 'pages';
-          id = components[1];
-        } else {
-          routeName = url;
-        }
-        node.properties.routeName = routeName;
-        node.properties.id = id;
-      }
-    } else if(node.tagName === 'image-gallery') {
-      // choose a compoent name for <image-gallery></image-gallery> element
-      // by default it tries to render remark/render/image-gallery
-      node.componentName = 'custom/image-gallery';
     }
+    return node;
   }
 
 }

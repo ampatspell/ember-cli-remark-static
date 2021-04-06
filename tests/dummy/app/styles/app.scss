@@ -1,104 +1,22 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700&subset=latin-ext');
-@import "tomorrow";
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700');
 
-$font-family: 'Ubuntu Mono', monospace;
-$font-size: 15px;
+$font-code: 'Ubuntu Mono';
+$font-text: $font-code;
+$font-size: 14px;
 
-body {
-  cursor: default;
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-family: $font-family;
-  font-size: $font-size;
-  padding: 0;
-  margin: 0;
+@import "body";
+@import "remark";
+
+.route-index {
+  padding: 25px;
 }
 
-.ui-application {
-  padding: 30px;
-  max-width: 600px;
-}
-
-code {
-  font-family: $font-family;
-}
-
-a {
-  color: #000;
-}
-
-h1 {
-  font-size: 21px;
-  font-weight: 400;
-  padding: 0;
-  margin: 0 0 40px 0;
-  a {
-    color: #000;
+.route-page {
+  padding: 25px;
+  > .placeholder {
+    > .title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
   }
-}
-
-h2 {
-  font-size: 18px;
-  font-weight: 400;
-  padding: 0;
-  margin: 40px 0 10px 0;
-}
-
-h3 {
-  font-size: 16px;
-  font-weight: 400;
-  padding: 0;
-  margin: 40px 0 10px 0;
-}
-
-.hljs {
-  padding: 0;
-  font-family: $font-family;
-  font-size: 13px;
-}
-
-ul {
-  padding: 0 0 0 15px;
-}
-
-li {
-  padding: 1px 0;
-}
-
-li p,
-blockquote p {
-  margin: 0;
-}
-
-blockquote {
-  margin-left: 0px;
-  border-left: 2px solid #666;
-  padding-left: 10px;
-}
-
-pre {
-  border: 1px solid #eee;
-  padding: 5px 10px;
-  border-radius: 3px;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid #ddd;
-}
-
-img {
-  max-width: 100%;
-}
-
-.image-gallery {
-  border: 1px solid #eee;
-  padding: 5px 10px;
-  border-radius: 3px;
-  user-select: none;
-}
-
-a.index {
-  text-decoration: none;
 }
