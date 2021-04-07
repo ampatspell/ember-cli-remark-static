@@ -22,7 +22,12 @@ let app = new EmberAddon(defaults, {
   remark: {
     collections: {
       // identifier: directory
-      'content': 'markdown/content'
+      'content': 'markdown/content',
+      // or
+      'content: {
+        path: 'markdown/content',
+        toc: true // default
+      }
     }
   }
 });

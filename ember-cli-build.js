@@ -10,7 +10,10 @@ module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
     remark: {
       collections: {
-        'content': 'markdown/content'
+        'content': {
+          path: 'markdown/content',
+          toc: true
+        }
       }
     },
     fingerprint: {

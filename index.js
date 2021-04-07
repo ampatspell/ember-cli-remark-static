@@ -8,8 +8,24 @@ const metadata = require('./lib/metadata');
 
 const extensions = [ 'md', 'png', 'jpg' ];
 
-const defaults = {
-  collections: {}
+const { assign, keys } = Object;
+
+const normalizeOptions = remark => {
+  let { collections } = assign({ collections: {} }, remark);
+
+  collections = keys(collections).reduce((hash, key) => {
+    let value = collections[key];
+    if(typeof value === 'string') {
+      value = { path: value };
+    }
+    value = assign({ toc: true }, value);
+    hash[key] = value;
+    return hash;
+  }, {});
+
+  return {
+    collections
+  }
 };
 
 module.exports = {
@@ -19,18 +35,21 @@ module.exports = {
   },
   included(app, parentAddon) {
     this._super.included.apply(this, arguments);
-    this.remark = Object.assign({}, defaults, (parentAddon || app).options['remark']);
+    this.remark = normalizeOptions((parentAddon || app).options['remark']);
+    console.log(this.remark);
   },
   treeForPublic() {
     let { remark } = this;
     let trees = [];
     for(let identifier in remark.collections) {
-      let dir = path.resolve(remark.collections[identifier]);
+      let hash = remark.collections[identifier];
+      let dir = path.resolve(hash.path);
       let content = funnel(dir, {
         destDir: `remark/${identifier}`,
         include: [ `**/*.{${extensions.join(',')}}` ]
       });
-      let index = writeFile(`remark/${identifier}/metadata.json`, metadata(dir, extensions));
+      let { toc } = hash;
+      let index = writeFile(`remark/${identifier}/metadata.json`, metadata(dir, extensions, { toc }));
       let tree = mergeTrees([ content, index ]);
       trees.push(tree);
     }
