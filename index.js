@@ -36,7 +36,6 @@ module.exports = {
   included(app, parentAddon) {
     this._super.included.apply(this, arguments);
     this.remark = normalizeOptions((parentAddon || app).options['remark']);
-    console.log(this.remark);
   },
   treeForPublic() {
     let { remark } = this;
