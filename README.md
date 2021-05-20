@@ -16,7 +16,7 @@ let app = new EmberAddon(defaults, {
       // identifier: directory
       'content': 'markdown/content',
       // or
-      'content: {
+      'content': {
         path: 'markdown/content',
         toc: true // default
       }
